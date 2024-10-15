@@ -1,14 +1,12 @@
-use bevy::{
-    prelude::*,
-    // sprite::{MaterialMesh2dBundle, Mesh2dHandle},
-};
+use bevy::prelude::*;
 use bevy_ecs_tilemap::{
     helpers,
     map::{TilemapId, TilemapSize, TilemapSpacing, TilemapTexture, TilemapTileSize, TilemapType},
-    prelude::{get_tilemap_center_transform, ArrayTextureLoader, TilemapArrayTexture},
+    prelude::{get_tilemap_center_transform, ArrayTextureLoader},
     tiles::{TileBundle, TilePos, TileStorage, TileTextureIndex},
     TilemapBundle, TilemapPlugin,
 };
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use jiff::civil::Weekday;
 use leafwing_input_manager::prelude::*;
 
@@ -17,6 +15,7 @@ fn main() {
         .add_plugins((
             DefaultPlugins,
             TilemapPlugin,
+            WorldInspectorPlugin::new(),
             // This plugin maps inputs to an input-type agnostic action-state
             // We need to provide it with an enum which stores the possible actions a player could take
             // The InputMap and ActionState components will be added to any entity with the Car component
@@ -45,7 +44,13 @@ fn setup(
     asset_server: Res<AssetServer>,
     array_texture_loader: Res<ArrayTextureLoader>,
 ) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2dBundle {
+        transform: Transform {
+            scale: Vec3::new(0.3, 0.3, 1.0),
+            ..default()
+        },
+        ..default()
+    });
 
     // commands.spawn((
     //     // Create a TextBundle that has a Text with a single section.
@@ -70,10 +75,10 @@ fn setup(
     // ));
 
     // <--------------------- 49 ------------------------>
-    //                         ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀      ^
-    //  Mo Tu We Th Fr Sa Su   vv vv vv vv vv vv vv      |
-    //     01 02 03 04 05 06                             |
-    //  07 08 09 10 11 12 13                             |
+    //                                                   |
+    //  Mo Tu We Th Fr Sa Su                             |
+    //     01 02 03 04 05 06   ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀ ⚀⚀      ^
+    //  07 08 09 10 11 12 13   vv vv vv vv vv vv vv      |
     //  14 15 16 17 18 19 20                             |
     //  21 22 23 24 25 26 27                          ⌂  12
     //  28 29 30 31                                      |

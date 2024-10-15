@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 bevy = "0.14.2"
+bevy-inspector-egui = "0.27.0"
 bevy_ecs_tilemap = "0.14.0"
 jiff = "0.1.13"
 leafwing-input-manager = "0.15.1"
